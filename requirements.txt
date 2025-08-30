@@ -1,0 +1,12 @@
+# SHOOT 'EM UP - Requirements
+# Game 2D Pygame Dependencies
+
+# Core game engine
+pygame>=2.5.0
+
+# Additional utilities (if needed)
+numpy>=1.21.0
+
+# Development dependencies
+# pytest>=7.0.0  # Uncomment for testing
+# pylint>=2.15.0  # Uncomment for code linting
