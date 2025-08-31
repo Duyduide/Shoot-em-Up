@@ -9,9 +9,10 @@
 - 🎯 Zombie spawn ngẫu nhiên mỗi 3 giây
 - 🔫 Click để bắn và tiêu diệt zombie
 - 📊 Hệ thống tính điểm Hit/Miss
-- 🎵 Sound effects và visual feedback
-- 📈 Tracking độ chính xác
+- 🎵 Background music và sound effects
+- 📈 Tracking độ chính xác  
 - 🎮 Difficulty tăng dần theo thời gian
+- 🎶 Audio controls (mute, pause/resume)
 
 ## Yêu cầu Hệ thống
 
@@ -54,18 +55,20 @@ python main.py
 
 1. **Khởi động game**: Chạy `python main.py`
 2. **Mục tiêu**: Click vào các đầu zombie khi chúng xuất hiện
-3. **Timing**: Mỗi zombie tồn tại trong 3 giây
+3. **Timing**: Mỗi zombie tồn tại trong 1.3 giây
 4. **Điểm số**: 
    - Hit: +10 điểm
    - Miss: -2 điểm
 5. **Accuracy**: Theo dõi tỷ lệ % hit/total shots
+6. **Audio**: Background music tự động phát, sound effects khi bắn/hit
 
 ## Controls
 
 - **Mouse**: Di chuyển crosshair
 - **Left Click**: Bắn
-- **ESC**: Thoát game/Pause
-- **R**: Restart game
+- **ESC**: Thoát game/Back to menu
+- **M**: Mute/Unmute background music
+- **P**: Pause/Resume background music
 
 ## Cấu trúc Dự án
 

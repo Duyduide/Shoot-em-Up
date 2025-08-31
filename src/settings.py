@@ -25,6 +25,17 @@ ZOMBIE_LIFETIME = 1.3  # 1.3 seconds per zombie
 INITIAL_SPAWN_RATE = 2.0  # Initial spawn rate (seconds between spawns)
 MIN_SPAWN_RATE = 0.5  # Minimum spawn rate (fastest spawning)
 
+# Multi-spawn settings
+MAX_ZOMBIES_ON_SCREEN = 3  # Maximum zombies on screen at once
+MIN_ZOMBIES_PER_SPAWN = 1  # Minimum zombies to spawn at once
+MAX_ZOMBIES_PER_SPAWN = 2  # Maximum zombies to spawn at once (early game)
+LATE_GAME_MAX_SPAWN = 3    # Maximum zombies to spawn at once (late game)
+
+# Cluster spawn settings
+CLUSTER_RADIUS = 120       # Radius of zombie cluster area
+MIN_CLUSTER_DISTANCE = 60  # Minimum distance between zombies in cluster
+CLUSTER_CENTER_VARIATION = 30  # How close first zombie spawns to center
+
 # Zombie settings
 ZOMBIE_SMALL_SIZE = (32, 32)
 ZOMBIE_LARGE_SIZE = (64, 64)
@@ -51,9 +62,9 @@ BACKGROUND_IMAGE = f"{IMAGES_DIR}/background.png"
 CROSSHAIR_IMAGE = f"{IMAGES_DIR}/crosshair.png"
 
 # Sound files
-SHOOT_SOUND = f"{SOUNDS_DIR}/shoot.wav"
+SHOOT_SOUND = f"{SOUNDS_DIR}/gun_shot.wav"
 HIT_SOUND = f"{SOUNDS_DIR}/hit.wav"
-MISS_SOUND = f"{SOUNDS_DIR}/miss.wav"
+THEME_MUSIC = f"{SOUNDS_DIR}/theme.wav"
 
 # Game states
 MENU_STATE = "menu"

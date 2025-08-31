@@ -39,6 +39,11 @@ class Game:
         # Load assets
         self._load_assets()
         
+        # Start background music
+        self.sound_manager.set_music_volume(0.3)  # Set to 30% volume
+        self.sound_manager.set_sfx_volume(0.5)    # Set SFX to 50% volume
+        self.sound_manager.play_theme_music()     # Start playing theme music
+        
     def _load_assets(self):
         """Load game assets"""
         try:
@@ -80,6 +85,17 @@ class Game:
                         self.state = MENU_STATE
                     else:
                         self.running = False
+                elif event.key == pygame.K_m:  # Toggle music mute
+                    current_volume = pygame.mixer.music.get_volume()
+                    if current_volume > 0:
+                        pygame.mixer.music.set_volume(0)
+                    else:
+                        self.sound_manager.set_music_volume(0.3)
+                elif event.key == pygame.K_p:  # Pause/Resume music
+                    if pygame.mixer.music.get_busy():
+                        self.sound_manager.pause_theme_music()
+                    else:
+                        self.sound_manager.resume_theme_music()
             
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:  # Left click
@@ -106,7 +122,7 @@ class Game:
                 self.sound_manager.play_hit()
             else:
                 self.score += MISS_PENALTY
-                self.sound_manager.play_miss()
+                # No miss sound as requested
             
             self.sound_manager.play_shoot()
             
@@ -151,7 +167,8 @@ class Game:
             
             # Draw UI
             accuracy = (self.hits / self.total_shots * 100) if self.total_shots > 0 else 0
-            self.ui.draw_game_ui(self.score, self.game_timer, accuracy)
+            alive_zombie_count = self.zombie_manager.get_alive_count()
+            self.ui.draw_game_ui(self.score, self.game_timer, accuracy, alive_zombie_count)
             
             # Draw crosshair
             mouse_pos = pygame.mouse.get_pos()

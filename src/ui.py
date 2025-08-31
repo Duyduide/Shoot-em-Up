@@ -49,6 +49,24 @@ class UI:
         quit_text = self.font_medium.render("QUIT", True, WHITE)
         quit_rect = quit_text.get_rect(center=self.quit_button.center)
         self.screen.blit(quit_text, quit_rect)
+        
+        # Controls info
+        controls_info = [
+            "Controls:",
+            "M - Mute/Unmute Music",
+            "P - Pause/Resume Music",
+            "ESC - Back/Quit"
+        ]
+        
+        y_start = SCREEN_HEIGHT - 120
+        for i, info in enumerate(controls_info):
+            if i == 0:  # Title
+                info_text = self.font_small.render(info, True, WHITE)
+            else:  # Controls
+                info_text = self.font_small.render(info, True, GRAY)
+            
+            info_rect = info_text.get_rect(center=(SCREEN_WIDTH//2, y_start + i * 25))
+            self.screen.blit(info_text, info_rect)
     
     def handle_menu_click(self, pos):
         """Handle click on menu buttons"""
@@ -58,8 +76,8 @@ class UI:
             return "quit"
         return None
     
-    def draw_game_ui(self, score, time_left, accuracy):
-        """Draw game UI (score, timer, accuracy)"""
+    def draw_game_ui(self, score, time_left, accuracy, zombie_count=0):
+        """Draw game UI (score, timer, accuracy, zombie count)"""
         # Score
         score_text = self.font_medium.render(f"Score: {score}", True, WHITE)
         self.screen.blit(score_text, (10, 10))
@@ -73,6 +91,12 @@ class UI:
         # Accuracy
         accuracy_text = self.font_small.render(f"Accuracy: {accuracy:.1f}%", True, WHITE)
         self.screen.blit(accuracy_text, (10, 50))
+        
+        # Zombie count (debug info)
+        zombie_text = self.font_small.render(f"Zombies: {zombie_count}", True, GRAY)
+        zombie_rect = zombie_text.get_rect()
+        zombie_rect.topright = (SCREEN_WIDTH - 10, 50)
+        self.screen.blit(zombie_text, zombie_rect)
     
     def draw_game_over(self, final_score, hits, total_shots, accuracy):
         """Draw game over screen"""

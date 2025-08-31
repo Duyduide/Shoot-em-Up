@@ -18,12 +18,16 @@ def main():
         game = Game()
         game.run()
         
+        # Stop background music when game ends
+        game.sound_manager.stop_theme_music()
+        
     except Exception as e:
         print(f"Error: {e}")
         return 1
     
     finally:
         # Cleanup
+        pygame.mixer.quit()
         pygame.quit()
     
     return 0

@@ -13,12 +13,15 @@ class SoundManager:
     def __init__(self):
         """Initialize sound manager"""
         # Initialize pygame mixer
+        pygame.mixer.pre_init(44100, -16, 2, 512)
         pygame.mixer.init()
         
-        # Sound effects (tạm thời để trống, sẽ load sau khi có file audio)
+        # Sound effects
         self.shoot_sound = None
         self.hit_sound = None
-        self.miss_sound = None
+        
+        # Background music
+        self.theme_music_loaded = False
         
         # Load sounds
         self._load_sounds()
@@ -26,13 +29,24 @@ class SoundManager:
     def _load_sounds(self):
         """Load sound effects"""
         try:
-            # Tạm thời comment out vì chưa có file audio
-            # self.shoot_sound = pygame.mixer.Sound(SHOOT_SOUND)
-            # self.hit_sound = pygame.mixer.Sound(HIT_SOUND)
-            # self.miss_sound = pygame.mixer.Sound(MISS_SOUND)
-            pass
+            # Load sound effects
+            self.shoot_sound = pygame.mixer.Sound(SHOOT_SOUND)
+            self.hit_sound = pygame.mixer.Sound(HIT_SOUND)
+            
+            # Load background music
+            pygame.mixer.music.load(THEME_MUSIC)
+            self.theme_music_loaded = True
+            
+            print("✅ All sound files loaded successfully!")
+            
         except Exception as e:
-            print(f"Warning: Could not load sound files: {e}")
+            print(f"⚠️ Warning: Could not load some sound files: {e}")
+            # Create fallback silence sounds if loading fails
+            try:
+                self.shoot_sound = pygame.mixer.Sound(buffer=bytes(1024))
+                self.hit_sound = pygame.mixer.Sound(buffer=bytes(1024))
+            except:
+                pass
     
     def play_shoot(self):
         """Play shoot sound"""
@@ -44,11 +58,33 @@ class SoundManager:
         if self.hit_sound:
             self.hit_sound.play()
     
-    def play_miss(self):
-        """Play miss sound"""
-        if self.miss_sound:
-            self.miss_sound.play()
+    def play_theme_music(self, loop=-1):
+        """Play background theme music"""
+        if self.theme_music_loaded:
+            try:
+                pygame.mixer.music.play(loop)  # loop=-1 means infinite loop
+            except Exception as e:
+                print(f"Could not play theme music: {e}")
     
-    def set_volume(self, volume):
-        """Set overall volume (0.0 to 1.0)"""
+    def stop_theme_music(self):
+        """Stop background music"""
+        pygame.mixer.music.stop()
+    
+    def pause_theme_music(self):
+        """Pause background music"""
+        pygame.mixer.music.pause()
+    
+    def resume_theme_music(self):
+        """Resume background music"""
+        pygame.mixer.music.unpause()
+    
+    def set_music_volume(self, volume):
+        """Set music volume (0.0 to 1.0)"""
         pygame.mixer.music.set_volume(volume)
+    
+    def set_sfx_volume(self, volume):
+        """Set sound effects volume (0.0 to 1.0)"""
+        if self.shoot_sound:
+            self.shoot_sound.set_volume(volume)
+        if self.hit_sound:
+            self.hit_sound.set_volume(volume)
