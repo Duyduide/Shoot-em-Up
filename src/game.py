@@ -51,10 +51,18 @@ class Game:
             self.background = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
             self.background.fill(BLACK)
             
-            # Load crosshair (tạm thời dùng circle)
-            self.crosshair_surface = pygame.Surface((32, 32), pygame.SRCALPHA)
-            pygame.draw.circle(self.crosshair_surface, WHITE, (16, 16), 15, 2)
-            pygame.draw.circle(self.crosshair_surface, WHITE, (16, 16), 1)
+            # Load crosshair image
+            try:
+                crosshair_original = pygame.image.load(CROSSHAIR_IMAGE).convert_alpha()
+                # Scale crosshair to smaller size (24x24 instead of original size)
+                self.crosshair_surface = pygame.transform.scale(crosshair_original, (64, 64))
+                print("✅ Crosshair image loaded and scaled successfully!")
+            except Exception as crosshair_error:
+                print(f"Warning: Could not load crosshair image: {crosshair_error}")
+                # Fallback to drawn crosshair (smaller size)
+                self.crosshair_surface = pygame.Surface((64, 64), pygame.SRCALPHA)
+                pygame.draw.circle(self.crosshair_surface, WHITE, (12, 12), 10, 2)
+                pygame.draw.circle(self.crosshair_surface, WHITE, (12, 12), 1)
             
         except Exception as e:
             print(f"Warning: Could not load some assets: {e}")
