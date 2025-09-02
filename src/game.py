@@ -25,6 +25,9 @@ class Game:
         self.state = MENU_STATE
         self.running = True
         
+        # Ensure mouse cursor is visible in menu
+        pygame.mouse.set_visible(True)
+        
         # Game components
         self.ui = UI(self.screen)
         self.zombie_manager = ZombieManager()
@@ -47,20 +50,28 @@ class Game:
     def _load_assets(self):
         """Load game assets"""
         try:
-            # Load background (tạm thời dùng màu đen)
-            self.background = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
-            self.background.fill(BLACK)
+            # Load background image
+            try:
+                background_image = pygame.image.load(BACKGROUND_IMAGE).convert()
+                # Scale background to screen size
+                self.background = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
+                print("✅ Background image loaded successfully!")
+            except Exception as bg_error:
+                print(f"Warning: Could not load background image: {bg_error}")
+                # Fallback to black background
+                self.background = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
+                self.background.fill(BLACK)
             
             # Load crosshair image
             try:
                 crosshair_original = pygame.image.load(CROSSHAIR_IMAGE).convert_alpha()
                 # Scale crosshair to smaller size (24x24 instead of original size)
-                self.crosshair_surface = pygame.transform.scale(crosshair_original, (64, 64))
+                self.crosshair_surface = pygame.transform.scale(crosshair_original, (32, 32))
                 print("✅ Crosshair image loaded and scaled successfully!")
             except Exception as crosshair_error:
                 print(f"Warning: Could not load crosshair image: {crosshair_error}")
                 # Fallback to drawn crosshair (smaller size)
-                self.crosshair_surface = pygame.Surface((64, 64), pygame.SRCALPHA)
+                self.crosshair_surface = pygame.Surface((32, 32), pygame.SRCALPHA)
                 pygame.draw.circle(self.crosshair_surface, WHITE, (12, 12), 10, 2)
                 pygame.draw.circle(self.crosshair_surface, WHITE, (12, 12), 1)
             
@@ -91,6 +102,8 @@ class Game:
                 if event.key == pygame.K_ESCAPE:
                     if self.state == PLAYING_STATE:
                         self.state = MENU_STATE
+                        # Show mouse cursor when returning to menu
+                        pygame.mouse.set_visible(True)
                     else:
                         self.running = False
                 elif event.key == pygame.K_m:  # Toggle music mute
@@ -137,6 +150,8 @@ class Game:
         elif self.state == GAME_OVER_STATE:
             # Check if clicked to return to menu
             self.state = MENU_STATE
+            # Ensure mouse cursor is visible in menu
+            pygame.mouse.set_visible(True)
     
     def _start_game(self):
         """Start new game"""
@@ -146,6 +161,9 @@ class Game:
         self.total_shots = 0
         self.game_timer = GAME_DURATION
         self.zombie_manager.reset()
+        
+        # Hide mouse cursor when entering game
+        pygame.mouse.set_visible(False)
     
     def _update(self, dt):
         """Update game state"""
@@ -156,6 +174,8 @@ class Game:
             # Check game over
             if self.game_timer <= 0:
                 self.state = GAME_OVER_STATE
+                # Show mouse cursor when game ends
+                pygame.mouse.set_visible(True)
                 return
             
             # Update zombies

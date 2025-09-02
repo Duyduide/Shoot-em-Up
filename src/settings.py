@@ -71,7 +71,7 @@ ZOMBIE_HIT_IMAGES = [
     f"{IMAGES_DIR}/zombie head-hit-4.png.png"    # Hit frame 4
 ]
 
-BACKGROUND_IMAGE = f"{IMAGES_DIR}/background.png"
+BACKGROUND_IMAGE = f"{IMAGES_DIR}/background.jpg"
 CROSSHAIR_IMAGE = f"{IMAGES_DIR}/crosshair.png"
 
 # Animation settings
