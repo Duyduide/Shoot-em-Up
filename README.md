@@ -19,8 +19,6 @@
 - Python 3.8 trở lên
 - Pygame 2.5.0 trở lên
 - Windows/Mac/Linux
-- RAM: 512MB minimum
-- Dung lượng: 100MB
 
 ## Cài đặt
 
@@ -87,38 +85,9 @@ btl1/
 └── requirements.txt       # Dependencies
 ```
 
-## Development Status
-
-- [x] Project planning
-- [ ] Core gameplay implementation
-- [ ] Visual assets integration
-- [ ] Audio system
-- [ ] UI/UX polish
-- [ ] Testing & optimization
-
-## Contributing
-
-1. Fork repository
-2. Create feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open Pull Request
-
-## Roadmap
-
-- **Phase 1**: Core mechanics (Zombie spawn, click detection)
-- **Phase 2**: Scoring system và UI
-- **Phase 3**: Visual/Audio enhancements
-- **Phase 4**: Game polish và optimization
-- **Phase 5**: Advanced features (power-ups, levels)
-
 ## License
 
-Dự án này được phát triển cho mục đích học tập - Assignment BTL1.
-
-## Contact
-
-Nếu có vấn đề hoặc góp ý, vui lòng tạo issue trong repository.
+Dự án này được phát triển cho mục đích học tập - Assignment 1 Môn Lập trình game HCMUT 251.
 
 ---
 

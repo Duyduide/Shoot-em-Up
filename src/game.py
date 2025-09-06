@@ -190,6 +190,11 @@ class Game:
             self.ui.draw_menu()
             
         elif self.state == PLAYING_STATE:
+            overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
+            overlay.set_alpha(128)
+            overlay.fill(BLACK)
+            self.screen.blit(overlay, (0, 0))
+            
             # Draw zombies
             self.zombie_manager.draw(self.screen)
             

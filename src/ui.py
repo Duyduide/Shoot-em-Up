@@ -26,6 +26,11 @@ class UI:
     
     def draw_menu(self):
         """Draw main menu"""
+        overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
+        overlay.set_alpha(128)
+        overlay.fill(BLACK)
+        self.screen.blit(overlay, (0, 0))
+        
         # Title
         title_text = self.font_large.render("SHOOT 'EM UP", True, WHITE)
         title_rect = title_text.get_rect(center=(SCREEN_WIDTH//2, SCREEN_HEIGHT//2 - 150))
