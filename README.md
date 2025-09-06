@@ -5,7 +5,7 @@
 **SHOOT 'EM UP** là một game luyện tập kỹ năng ngắm bắn 2D được phát triển bằng Pygame. Game mô phỏng cơ chế tương tự Aim Lab với việc bắn các đầu zombie xuất hiện ngẫu nhiên trên màn hình.
 
 ## Video Demo của Game
-[![Watch the video]](https://youtu.be/7tuKYZA5FOk)
+[![Video]](https://youtu.be/7tuKYZA5FOk)
 ## Tính năng
 
 - 🎯 Zombie spawn ngẫu nhiên mỗi 3 giây
