@@ -4,6 +4,8 @@
 
 **SHOOT 'EM UP** là một game luyện tập kỹ năng ngắm bắn 2D được phát triển bằng Pygame. Game mô phỏng cơ chế tương tự Aim Lab với việc bắn các đầu zombie xuất hiện ngẫu nhiên trên màn hình.
 
+## Video Demo của Game
+[![Watch the video]](https://youtu.be/7tuKYZA5FOk)
 ## Tính năng
 
 - 🎯 Zombie spawn ngẫu nhiên mỗi 3 giây
@@ -18,13 +20,12 @@
 
 - Python 3.8 trở lên
 - Pygame 2.5.0 trở lên
-- Windows/Mac/Linux
 
 ## Cài đặt
 
 ### 1. Clone repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/Duyduide/Shoot-em-Up.git
 cd btl1
 ```
 
@@ -53,7 +54,7 @@ python main.py
 
 1. **Khởi động game**: Chạy `python main.py`
 2. **Mục tiêu**: Click vào các đầu zombie khi chúng xuất hiện
-3. **Timing**: Mỗi zombie tồn tại trong 1.3 giây
+3. **Timing**: Mỗi zombie tồn tại trong 0.8 giây
 4. **Điểm số**: 
    - Hit: +10 điểm
    - Miss: -2 điểm
@@ -87,7 +88,9 @@ btl1/
 
 ## License
 
-Dự án này được phát triển cho mục đích học tập - Assignment 1 Môn Lập trình game HCMUT 251.
+- Dự án này được phát triển cho mục đích học tập 
+- Assignment 1 Môn Lập trình Game HCMUT (CO3045) 
+- Học kỳ 251
 
 ---
 

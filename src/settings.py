@@ -21,15 +21,15 @@ DARK_GRAY = (64, 64, 64)
 
 # Game settings
 GAME_DURATION = 30  # 30 seconds per round
-ZOMBIE_LIFETIME = 1.5  # 1.3 seconds per zombie
+ZOMBIE_LIFETIME = 0.8  # 0.8 seconds per zombie
 INITIAL_SPAWN_RATE = 2.0  # Initial spawn rate (seconds between spawns)
 MIN_SPAWN_RATE = 0.5  # Minimum spawn rate (fastest spawning)
 
 # Multi-spawn settings
-MAX_ZOMBIES_ON_SCREEN = 3  # Maximum zombies on screen at once
-MIN_ZOMBIES_PER_SPAWN = 1  # Minimum zombies to spawn at once
-MAX_ZOMBIES_PER_SPAWN = 2  # Maximum zombies to spawn at once (early game)
-LATE_GAME_MAX_SPAWN = 3    # Maximum zombies to spawn at once (late game)
+MAX_ZOMBIES_ON_SCREEN = 4  # Maximum zombies on screen at once
+MIN_ZOMBIES_PER_SPAWN = 2  # Minimum zombies to spawn at once
+MAX_ZOMBIES_PER_SPAWN = 3  # Maximum zombies to spawn at once (early game)
+LATE_GAME_MAX_SPAWN = 4    # Maximum zombies to spawn at once (late game)
 
 # Cluster spawn settings
 CLUSTER_RADIUS = 300       # Increased radius for larger zombies
@@ -37,8 +37,8 @@ MIN_CLUSTER_DISTANCE = 200  # Increased minimum distance for larger zombies
 CLUSTER_CENTER_VARIATION = 30  # How close first zombie spawns to center
 
 # Zombie settings
-ZOMBIE_SMALL_SIZE = (150, 150)   # Increased from (32, 32)
-ZOMBIE_LARGE_SIZE = (200, 200)   # Increased from (64, 64)
+ZOMBIE_SMALL_SIZE = (150, 150)   
+ZOMBIE_LARGE_SIZE = (200, 200)   
 ZOMBIE_SPAWN_MARGIN = 50  # Margin from screen edges
 
 # Scoring

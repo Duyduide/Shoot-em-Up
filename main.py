@@ -18,7 +18,7 @@ def main():
         game = Game()
         game.run()
         
-        # Stop background music when game ends
+        # Tắt background music khi mà end game
         game.sound_manager.stop_theme_music()
         
     except Exception as e:

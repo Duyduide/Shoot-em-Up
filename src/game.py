@@ -25,7 +25,6 @@ class Game:
         self.state = MENU_STATE
         self.running = True
         
-        # Ensure mouse cursor is visible in menu
         pygame.mouse.set_visible(True)
         
         # Game components
@@ -53,24 +52,24 @@ class Game:
             # Load background image
             try:
                 background_image = pygame.image.load(BACKGROUND_IMAGE).convert()
-                # Scale background to screen size
+                
                 self.background = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
                 print("✅ Background image loaded successfully!")
             except Exception as bg_error:
                 print(f"Warning: Could not load background image: {bg_error}")
-                # Fallback to black background
+                # Nào gặp lỗi thì vẽ tạm nền đen
                 self.background = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
                 self.background.fill(BLACK)
             
             # Load crosshair image
             try:
                 crosshair_original = pygame.image.load(CROSSHAIR_IMAGE).convert_alpha()
-                # Scale crosshair to smaller size (24x24 instead of original size)
+
                 self.crosshair_surface = pygame.transform.scale(crosshair_original, (32, 32))
                 print("✅ Crosshair image loaded and scaled successfully!")
             except Exception as crosshair_error:
                 print(f"Warning: Could not load crosshair image: {crosshair_error}")
-                # Fallback to drawn crosshair (smaller size)
+                # Nào gặp lỗi thì vẽ tạm crosshair đơn giản
                 self.crosshair_surface = pygame.Surface((32, 32), pygame.SRCALPHA)
                 pygame.draw.circle(self.crosshair_surface, WHITE, (12, 12), 10, 2)
                 pygame.draw.circle(self.crosshair_surface, WHITE, (12, 12), 1)
@@ -83,13 +82,10 @@ class Game:
         while self.running:
             dt = self.clock.tick(FPS) / 1000.0  # Delta time in seconds
             
-            # Handle events
             self._handle_events()
             
-            # Update game state
             self._update(dt)
             
-            # Render
             self._render()
     
     def _handle_events(self):
@@ -102,7 +98,7 @@ class Game:
                 if event.key == pygame.K_ESCAPE:
                     if self.state == PLAYING_STATE:
                         self.state = MENU_STATE
-                        # Show mouse cursor when returning to menu
+
                         pygame.mouse.set_visible(True)
                     else:
                         self.running = False
@@ -117,6 +113,10 @@ class Game:
                         self.sound_manager.pause_theme_music()
                     else:
                         self.sound_manager.resume_theme_music()
+                elif event.key == pygame.K_RETURN:  # Enter key
+                    if self.state == GAME_OVER_STATE:
+                        self.state = MENU_STATE
+                        pygame.mouse.set_visible(True)
             
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:  # Left click
@@ -125,7 +125,7 @@ class Game:
     def _handle_click(self, pos):
         """Handle mouse click"""
         if self.state == MENU_STATE:
-            # Check menu buttons
+            
             button_clicked = self.ui.handle_menu_click(pos)
             if button_clicked == "play":
                 self._start_game()
@@ -133,7 +133,7 @@ class Game:
                 self.running = False
                 
         elif self.state == PLAYING_STATE:
-            # Shoot at zombies
+            
             self.total_shots += 1
             hit = self.zombie_manager.check_hit(pos)
             
@@ -143,15 +143,9 @@ class Game:
                 self.sound_manager.play_hit()
             else:
                 self.score += MISS_PENALTY
-                # No miss sound as requested
+               
             
             self.sound_manager.play_shoot()
-            
-        elif self.state == GAME_OVER_STATE:
-            # Check if clicked to return to menu
-            self.state = MENU_STATE
-            # Ensure mouse cursor is visible in menu
-            pygame.mouse.set_visible(True)
     
     def _start_game(self):
         """Start new game"""
@@ -162,23 +156,19 @@ class Game:
         self.game_timer = GAME_DURATION
         self.zombie_manager.reset()
         
-        # Hide mouse cursor when entering game
         pygame.mouse.set_visible(False)
     
     def _update(self, dt):
         """Update game state"""
         if self.state == PLAYING_STATE:
-            # Update game timer
             self.game_timer -= dt
             
-            # Check game over
             if self.game_timer <= 0:
                 self.state = GAME_OVER_STATE
-                # Show mouse cursor when game ends
+                
                 pygame.mouse.set_visible(True)
                 return
             
-            # Update zombies
             self.zombie_manager.update(dt, self.game_timer)
     
     def _render(self):
@@ -190,11 +180,12 @@ class Game:
             self.ui.draw_menu()
             
         elif self.state == PLAYING_STATE:
+            # Semi-transparent overlay
             overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
             overlay.set_alpha(128)
             overlay.fill(BLACK)
             self.screen.blit(overlay, (0, 0))
-            
+
             # Draw zombies
             self.zombie_manager.draw(self.screen)
             

@@ -14,23 +14,22 @@ class UI:
         """Initialize UI"""
         self.screen = screen
         
-        # Initialize fonts
         pygame.font.init()
         self.font_large = pygame.font.Font(None, FONT_SIZE_LARGE)
         self.font_medium = pygame.font.Font(None, FONT_SIZE_MEDIUM)
         self.font_small = pygame.font.Font(None, FONT_SIZE_SMALL)
         
-        # Menu button rects
         self.play_button = pygame.Rect(SCREEN_WIDTH//2 - 100, SCREEN_HEIGHT//2 - 50, 200, 50)
         self.quit_button = pygame.Rect(SCREEN_WIDTH//2 - 100, SCREEN_HEIGHT//2 + 20, 200, 50)
     
     def draw_menu(self):
         """Draw main menu"""
+        # Semi-transparent overlay
         overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
         overlay.set_alpha(128)
         overlay.fill(BLACK)
         self.screen.blit(overlay, (0, 0))
-        
+
         # Title
         title_text = self.font_large.render("SHOOT 'EM UP", True, WHITE)
         title_rect = title_text.get_rect(center=(SCREEN_WIDTH//2, SCREEN_HEIGHT//2 - 150))
@@ -55,7 +54,6 @@ class UI:
         quit_rect = quit_text.get_rect(center=self.quit_button.center)
         self.screen.blit(quit_text, quit_rect)
         
-        # Controls info
         controls_info = [
             "Controls:",
             "M - Mute/Unmute Music",
@@ -65,9 +63,9 @@ class UI:
         
         y_start = SCREEN_HEIGHT - 120
         for i, info in enumerate(controls_info):
-            if i == 0:  # Title
+            if i == 0:  
                 info_text = self.font_small.render(info, True, WHITE)
-            else:  # Controls
+            else: 
                 info_text = self.font_small.render(info, True, GRAY)
             
             info_rect = info_text.get_rect(center=(SCREEN_WIDTH//2, y_start + i * 25))
@@ -97,7 +95,6 @@ class UI:
         accuracy_text = self.font_small.render(f"Accuracy: {accuracy:.1f}%", True, WHITE)
         self.screen.blit(accuracy_text, (10, 50))
         
-        # Zombie count (debug info)
         zombie_text = self.font_small.render(f"Zombies: {zombie_count}", True, GRAY)
         zombie_rect = zombie_text.get_rect()
         zombie_rect.topright = (SCREEN_WIDTH - 10, 50)
@@ -116,7 +113,6 @@ class UI:
         title_rect = title_text.get_rect(center=(SCREEN_WIDTH//2, SCREEN_HEIGHT//2 - 150))
         self.screen.blit(title_text, title_rect)
         
-        # Stats
         stats = [
             f"Final Score: {final_score}",
             f"Hits: {hits}",
@@ -131,7 +127,6 @@ class UI:
             self.screen.blit(stat_text, stat_rect)
             y_offset += 40
         
-        # Instructions
-        instruction_text = self.font_small.render("Click anywhere to return to menu", True, GRAY)
+        instruction_text = self.font_small.render("Press ENTER to return to menu", True, GRAY)
         instruction_rect = instruction_text.get_rect(center=(SCREEN_WIDTH//2, SCREEN_HEIGHT//2 + 100))
         self.screen.blit(instruction_text, instruction_rect)

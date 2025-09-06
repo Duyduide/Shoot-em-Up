@@ -11,8 +11,7 @@ from .settings import *
 
 class Zombie:
     """Class đại diện cho một zombie với sprite animation system"""
-    
-    # Class variables to share loaded images between all zombies
+
     idle_images_small = None
     idle_images_large = None
     hit_images_small = None
@@ -27,7 +26,6 @@ class Zombie:
             
         print("🔄 Loading zombie sprite animations...")
         
-        # Load idle animation frames
         cls.idle_images_small = []
         cls.idle_images_large = []
         
@@ -35,11 +33,9 @@ class Zombie:
             for image_path in ZOMBIE_IDLE_IMAGES:
                 img = pygame.image.load(image_path).convert_alpha()
                 
-                # Scale for small zombies
                 scaled_small = pygame.transform.scale(img, ZOMBIE_SMALL_SIZE)
                 cls.idle_images_small.append(scaled_small)
                 
-                # Scale for large zombies
                 scaled_large = pygame.transform.scale(img, ZOMBIE_LARGE_SIZE)
                 cls.idle_images_large.append(scaled_large)
             
@@ -48,7 +44,6 @@ class Zombie:
             print(f"⚠️ Warning: Could not load idle images: {e}")
             cls._create_fallback_idle_images()
         
-        # Load hit animation frames
         cls.hit_images_small = []
         cls.hit_images_large = []
         
@@ -56,11 +51,9 @@ class Zombie:
             for image_path in ZOMBIE_HIT_IMAGES:
                 img = pygame.image.load(image_path).convert_alpha()
                 
-                # Scale for small zombies
                 scaled_small = pygame.transform.scale(img, ZOMBIE_SMALL_SIZE)
                 cls.hit_images_small.append(scaled_small)
                 
-                # Scale for large zombies
                 scaled_large = pygame.transform.scale(img, ZOMBIE_LARGE_SIZE)
                 cls.hit_images_large.append(scaled_large)
             
@@ -81,13 +74,11 @@ class Zombie:
         cls.idle_images_large = []
         
         for color in colors:
-            # Small fallback
             surface_small = pygame.Surface(ZOMBIE_SMALL_SIZE)
             surface_small.fill(color)
             pygame.draw.rect(surface_small, WHITE, surface_small.get_rect(), 2)
             cls.idle_images_small.append(surface_small)
             
-            # Large fallback
             surface_large = pygame.Surface(ZOMBIE_LARGE_SIZE)
             surface_large.fill(color)
             pygame.draw.rect(surface_large, WHITE, surface_large.get_rect(), 2)
@@ -102,27 +93,24 @@ class Zombie:
         cls.hit_images_large = []
         
         for i, color in enumerate(colors):
-            # Small fallback
             surface_small = pygame.Surface(ZOMBIE_SMALL_SIZE)
             surface_small.fill(color)
             pygame.draw.rect(surface_small, WHITE, surface_small.get_rect(), 2)
-            if i > 0:  # Add X for hit effect
+            if i > 0:  
                 pygame.draw.line(surface_small, BLACK, (5, 5), (ZOMBIE_SMALL_SIZE[0]-5, ZOMBIE_SMALL_SIZE[1]-5), 2)
                 pygame.draw.line(surface_small, BLACK, (ZOMBIE_SMALL_SIZE[0]-5, 5), (5, ZOMBIE_SMALL_SIZE[1]-5), 2)
             cls.hit_images_small.append(surface_small)
             
-            # Large fallback
             surface_large = pygame.Surface(ZOMBIE_LARGE_SIZE)
             surface_large.fill(color)
             pygame.draw.rect(surface_large, WHITE, surface_large.get_rect(), 2)
-            if i > 0:  # Add X for hit effect
+            if i > 0:  
                 pygame.draw.line(surface_large, BLACK, (5, 5), (ZOMBIE_LARGE_SIZE[0]-5, ZOMBIE_LARGE_SIZE[1]-5), 3)
                 pygame.draw.line(surface_large, BLACK, (ZOMBIE_LARGE_SIZE[0]-5, 5), (5, ZOMBIE_LARGE_SIZE[1]-5), 3)
             cls.hit_images_large.append(surface_large)
     
     def __init__(self, x, y, zombie_type="small"):
         """Initialize zombie with sprite animation system"""
-        # Load shared images if not already loaded
         if not Zombie.images_loaded:
             Zombie.load_zombie_images()
         
@@ -132,14 +120,12 @@ class Zombie:
         self.lifetime = ZOMBIE_LIFETIME
         self.alive = True
         
-        # Animation states
         self.is_hit = False
         self.hit_animation_timer = 0
         self.idle_animation_timer = 0
         self.current_idle_frame = 0
         self.current_hit_frame = 0
         
-        # Set size and get references to appropriate images
         if zombie_type == "small":
             self.size = ZOMBIE_SMALL_SIZE
             self.idle_images = Zombie.idle_images_small
@@ -149,7 +135,6 @@ class Zombie:
             self.idle_images = Zombie.idle_images_large
             self.hit_images = Zombie.hit_images_large
         
-        # Create rect for collision detection
         self.rect = pygame.Rect(x - self.size[0]//2, y - self.size[1]//2, 
                                self.size[0], self.size[1])
     
@@ -159,32 +144,25 @@ class Zombie:
             return
         
         if self.is_hit:
-            # Update hit animation
             self.hit_animation_timer += dt
             
-            # Calculate hit animation frame
             frame_index = int(self.hit_animation_timer / ZOMBIE_HIT_FRAME_DURATION)
             self.current_hit_frame = min(frame_index, len(self.hit_images) - 1)
             
-            # Check if hit animation is complete
             if self.hit_animation_timer >= ZOMBIE_HIT_ANIMATION_DURATION:
                 self.alive = False
                 return
         else:
-            # Update idle animation
             self.idle_animation_timer += dt
             
-            # Calculate idle animation frame (loops continuously)
             total_idle_frames = len(self.idle_images)
             if total_idle_frames > 0:
                 frame_index = int(self.idle_animation_timer / ZOMBIE_IDLE_ANIMATION_SPEED) % total_idle_frames
                 self.current_idle_frame = frame_index
         
-        # Decrease lifetime (only if not hit)
         if not self.is_hit:
             self.lifetime -= dt
             
-            # Check if zombie should disappear
             if self.lifetime <= 0:
                 self.alive = False
     
