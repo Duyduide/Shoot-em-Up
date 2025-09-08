@@ -148,13 +148,14 @@ class Game:
             self.sound_manager.play_shoot()
     
     def _start_game(self):
-        """Start new game"""
+        """Start new game""" 
         self.state = PLAYING_STATE
         self.score = 0
         self.hits = 0
         self.total_shots = 0
         self.game_timer = GAME_DURATION
         self.zombie_manager.reset()
+        self.zombie_manager.spawn_timer = 1.0        
         
         pygame.mouse.set_visible(False)
     
